@@ -17,7 +17,9 @@ import fs from "node:fs";
 import { renderPage } from "./templatingEngine.js";
 
 function loadPage(filename, title) {
-    const content = fs.readFileSync(`./pages/${filename}.html`, "utf8");
+    const filePath = new URL(`../pages/${filename}.html`, import.meta.url);
+    const content = fs.readFileSync(filePath, "utf8");
+
     return renderPage(content, title);
 }
 
