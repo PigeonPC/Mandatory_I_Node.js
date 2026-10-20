@@ -1,0 +1,211 @@
+
+<main class="documentation">
+    <h1>8. Frontend &amp; HTML</h1>
+
+    <nav class="chapter-intro" aria-label="Chapter contents">
+        <a href="#static-files">Static Files</a> |
+        <a href="#client-server-files">Client vs. Server Files</a> |
+        <a href="#semantic-html">Semantic HTML</a> |
+        <a href="#frontend-structure">Frontend Structure</a> |
+        <a href="#css-footer">CSS Footer</a>
+    </nav>
+
+    <section id="static-files">
+        <h2>8.1 Static Files</h2>
+
+        <h3>Hvad er Static Files?</h3>
+
+        <p>
+            Filer som serveren sender direkte til clienten
+            uden at ændre indholdet.
+            Fx HTML, CSS, JavaScript og billeder.
+        </p>
+
+        <h3>express.static() og public-mappen</h3>
+
+        <p>
+            Vi bruger express.static() til at gøre statiske filer
+            tilgængelige for browseren.
+        </p>
+
+        <pre><code>import express from "express";
+
+const app = express();
+
+app.use(express.static("public"));</code></pre>
+
+        <p>
+            Gør filerne i public-mappen tilgængelige.
+            Vi lægger filer til browseren i /public.
+        </p>
+
+        <p>
+            Det gør det nemmere at kontrollere hvilke filer
+            der kan hentes af browseren.
+        </p>
+    </section>
+
+    <section id="client-server-files">
+        <h2>8.2 Client vs. Server Files</h2>
+
+        <h3>Forskellen på Client og Server Files</h3>
+
+        <p>
+            <strong>Client files:</strong> Filer som sendes til browseren.
+            Fx HTML, CSS, JavaScript og billeder. /public.
+        </p>
+
+        <p>
+            <strong>Server files:</strong> Filer som bruges på serveren.
+            Fx app.js og backend-kode.
+        </p>
+
+        <h3>Hvorfor skal vi ikke serve alle filer?</h3>
+
+        <p>
+            Det er vigtigt for sikkerheden så clienten ikke har
+            adgang til alle serverfiler.
+            Følsomme oplysninger skal ikke deles med klienten.
+        </p>
+    </section>
+
+    <section id="semantic-html">
+        <h2>8.3 Semantic HTML</h2>
+
+        <h3>Hvad er Semantic HTML?</h3>
+
+        <p>
+            Semantic HTML betyder at vi bruger HTML-tags som beskriver
+            hvad indholdet på siden er.
+        </p>
+
+        <p>
+            Fx bruger vi &lt;nav&gt; til navigation
+            i stedet for bare at bruge &lt;div&gt; til det hele.
+        </p>
+
+        <p>
+            Det gør koden nemmere at læse og forstå intuitivt.
+        </p>
+
+        <h3>nav, main og footer</h3>
+
+        <p>
+            <strong>&lt;nav&gt;:</strong>
+            Indeholder navigation og links til andre sider.
+        </p>
+
+        <p>
+            <strong>&lt;main&gt;:</strong>
+            Indeholder sidens vigtigste indhold.
+        </p>
+
+        <p>
+            <strong>&lt;footer&gt;:</strong>
+            Indeholder typisk information nederst på siden.
+        </p>
+
+        <pre><code>&lt;body&gt;
+    &lt;nav&gt;
+        &lt;a href="/"&gt;Home&lt;/a&gt;
+        &lt;a href="/about"&gt;About&lt;/a&gt;
+    &lt;/nav&gt;
+
+    &lt;main&gt;
+        &lt;h1&gt;Planter&lt;/h1&gt;
+        &lt;p&gt;Welcome to Planter!&lt;/p&gt;
+    &lt;/main&gt;
+
+    &lt;footer&gt;
+        &lt;p&gt;© 2026&lt;/p&gt;
+    &lt;/footer&gt;
+&lt;/body&gt;</code></pre>
+    </section>
+
+    <section id="frontend-structure">
+        <h2>8.4 Frontend Structure</h2>
+
+        <h3>Mappestruktur</h3>
+
+        <p>
+            Vi opdeler vores frontend i forskellige mapper.
+            Det gør det nemmere at holde overblik.
+        </p>
+
+        <p>
+            <strong>assets:</strong>
+            Filer som bruges flere steder på hjemmesiden.
+        </p>
+
+        <p>
+            <strong>pages:</strong>
+            De forskellige sider. Kan have deres egen HTML,
+            CSS og JavaScript.
+        </p>
+
+        <p>
+            <strong>components:</strong>
+            Dele af hjemmesiden som skal genbruges.
+            Fx header, navigation og footer.
+        </p>
+    </section>
+
+    <section id="css-footer">
+        <h2>8.5 CSS Footer</h2>
+
+        <h3>Footer i bunden af siden</h3>
+
+        <p>
+            Vi vil gerne have at footeren ligger nederst på siden
+            uanset mængden af indhold.
+            Det kan vi gøre med Flexbox.
+        </p>
+
+        <h3>HTML</h3>
+
+        <pre><code>&lt;body&gt;
+    &lt;nav&gt;Navigation&lt;/nav&gt;
+    &lt;main&gt;Page content&lt;/main&gt;
+    &lt;footer&gt;Footer&lt;/footer&gt;
+&lt;/body&gt;</code></pre>
+
+        <h3>CSS</h3>
+
+        <pre><code>body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+}</code></pre>
+
+        <p>
+            <strong>min-height: 100vh:</strong>
+            Gør at body mindst fylder hele skærmens højde.
+        </p>
+
+        <p>
+            <strong>display: flex:</strong>
+            Bruger Flexbox til at placere elementerne.
+        </p>
+
+        <p>
+            <strong>flex-direction: column:</strong>
+            Placerer elementerne lodret.
+        </p>
+
+        <p>
+            <strong>flex: 1:</strong>
+            Får main til at fylde den ledige plads
+            så footeren skubbes ned i bunden.
+        </p>
+
+        <p>
+            Det betyder at footeren bliver nederst på siden,
+            men stadig flytter sig længere ned hvis indholdet
+            fylder mere end skærmens højde.
+        </p>
+    </section>
+</main>

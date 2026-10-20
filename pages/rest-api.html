@@ -1,0 +1,225 @@
+
+<main class="documentation">
+    <h1>6. REST API &amp; CRUD</h1>
+
+    <nav class="chapter-intro" aria-label="Chapter contents">
+        <a href="#rest-api">REST API</a> |
+        <a href="#rest-conventions">REST-konventioner</a> |
+        <a href="#rest-design">REST API Design</a> |
+        <a href="#crud">HTTP Methods &amp; CRUD</a> |
+        <a href="#status-codes">Status Codes</a>
+    </nav>
+
+    <section id="rest-api">
+        <h2>6.1 REST API</h2>
+
+        <h3>Hvad er et REST API?</h3>
+
+        <p>
+            Et REST API er en måde hvor client og server kan kommunikere
+            med hinanden gennem HTTP.
+        </p>
+
+        <p>
+            Vi bruger endpoints til at arbejde med resources,
+            fx hente, oprette, ændre eller slette dyr i vores Animals API.
+        </p>
+
+        <h3 id="rest-conventions">REST-konventioner</h3>
+
+        <p>I undervisningen følger vi tre REST-konventioner:</p>
+
+        <ol>
+            <li>
+                <strong>HTTP Methods:</strong>
+                Brug den rigtige HTTP-metode.
+                Fx GET til at hente data og POST til at oprette data.
+            </li>
+            <li>
+                <strong>Ordering:</strong>
+                Brug den korrekte rækkefølge af HTTP-metoder:
+                GET, POST, PUT, PATCH, DELETE.
+            </li>
+            <li>
+                <strong>Naming:</strong>
+                Brug navngivning i flertal der passer til samlingerne
+                i systemet. Fx GET /animals.
+            </li>
+        </ol>
+
+        <h3 id="rest-design">REST API Design</h3>
+
+        <p>
+            Eksempel på endpoints til et Animals API:
+        </p>
+
+        <pre><code>GET     /api/animals
+GET     /api/animals/:id
+POST    /api/animals
+PUT     /api/animals/:id
+PATCH   /api/animals/:id
+DELETE  /api/animals/:id</code></pre>
+    </section>
+
+    <section id="crud">
+        <h2>6.2 HTTP Methods &amp; CRUD</h2>
+
+        <h3>Hvad er CRUD?</h3>
+
+        <p>
+            Create, Read, Update, Delete.
+            Det er de fire grundlæggende handlinger
+            som vi kan gøre på data.
+        </p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>CRUD</th>
+                    <th>HTTP Method</th>
+                    <th>Handling</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Create</td>
+                    <td>POST</td>
+                    <td>Opretter data</td>
+                </tr>
+                <tr>
+                    <td>Read</td>
+                    <td>GET</td>
+                    <td>Henter data</td>
+                </tr>
+                <tr>
+                    <td>Update</td>
+                    <td>PUT / PATCH</td>
+                    <td>Opdaterer data</td>
+                </tr>
+                <tr>
+                    <td>Delete</td>
+                    <td>DELETE</td>
+                    <td>Sletter data</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>HTTP Methods</h3>
+
+        <p>
+            <strong>GET:</strong> Henter data fra serveren.
+        </p>
+
+        <p>
+            <strong>POST:</strong> Opretter en ny resource.
+        </p>
+
+        <p>
+            <strong>PUT:</strong> Erstatter en hel eksisterende resource.
+        </p>
+
+        <p>
+            <strong>PATCH:</strong> Opdaterer dele af en eksisterende resource.
+        </p>
+
+        <p>
+            <strong>DELETE:</strong> Sletter en resource.
+        </p>
+    </section>
+
+    <section id="status-codes">
+        <h2>6.3 HTTP Status Codes</h2>
+
+        <h3>Statuskoder</h3>
+
+        <p>
+            En HTTP status code fortæller klienten hvordan en request
+            er gået. Om den lykkedes eller om der skete en fejl.
+        </p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Family</th>
+                    <th>Meaning</th>
+                    <th>Examples</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1xx</td>
+                    <td>Informational</td>
+                    <td>100 Continue</td>
+                </tr>
+                <tr>
+                    <td>2xx</td>
+                    <td>Success</td>
+                    <td>200 OK, 201 Created, 204 No Content</td>
+                </tr>
+                <tr>
+                    <td>3xx</td>
+                    <td>Redirection</td>
+                    <td>301 Moved Permanently, 302 Found, 304 Not Modified</td>
+                </tr>
+                <tr>
+                    <td>4xx</td>
+                    <td>Client Error</td>
+                    <td>400 Bad Request, 401 Unauthorized, 403 Forbidden, 404 Not Found</td>
+                </tr>
+                <tr>
+                    <td>5xx</td>
+                    <td>Server Error</td>
+                    <td>500 Internal Server Error, 502 Bad Gateway, 503 Service Unavailable</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>Typiske statuskoder</h3>
+
+        <p>
+            <strong>200 OK:</strong> Requesten lykkedes.
+        </p>
+
+        <p>
+            <strong>201 Created:</strong> En ny resource er oprettet.
+        </p>
+
+        <p>
+            <strong>204 No Content:</strong> Requesten lykkedes,
+            men der sendes ikke noget indhold tilbage.
+        </p>
+
+        <p>
+            <strong>400 Bad Request:</strong> Serveren kan ikke
+            behandle requesten pga. en fejl i den.
+        </p>
+
+        <p>
+            <strong>404 Not Found:</strong> Den ønskede resource findes ikke.
+        </p>
+
+        <p>
+            <strong>500 Internal Server Error:</strong> Der er sket en fejl
+            på serveren.
+        </p>
+
+        <h3>Statuskoder i Express</h3>
+
+        <pre><code>app.get("/api/animals/:id", (req, res) =&gt; {
+    const animal = animals.find(
+        (animal) =&gt; animal.id === Number(req.params.id)
+    );
+
+    if (!animal) {
+        return res.status(404).send({ error: "Animal not found" });
+    }
+
+    res.send({ data: animal });
+});</code></pre>
+
+        <p>
+            Returnerer 404 hvis animal ikke findes.
+            Ellers returnerer den 200 OK.
+        </p>
+    </section>
+</main>

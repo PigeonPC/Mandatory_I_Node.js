@@ -1,0 +1,270 @@
+
+<main class="documentation">
+    <h1>3. Node.js &amp; NPM</h1>
+
+    <nav class="chapter-intro" aria-label="Chapter contents">
+        <a href="#nodejs">Node.js</a> |
+        <a href="#npm">NPM</a> |
+        <a href="#package-json">package.json</a> |
+        <a href="#npm-scripts">Scripts</a> |
+        <a href="#nodemon">Nodemon</a>
+    </nav>
+
+    <section id="nodejs">
+        <h2>3.1 Node.js</h2>
+
+        <h3>Hvad er Node.js?</h3>
+
+        <p>
+            Med Node.js kan man køre JavaScript uden for browseren!
+            Normalt køres JavaScript i browseren, altså client-side,
+            men med Node.js kan vi også køre det på serveren, server-side.
+        </p>
+
+        <p>
+            Du kan fx lave API'er, scripts, automatisering og CLI.
+        </p>
+
+        <h3>Køre JavaScript med Node.js</h3>
+
+        <p>
+            Når vi vil køre en JavaScript-fil med Node,
+            skriver vi i terminalen:
+        </p>
+
+        <pre><code>node app.js</code></pre>
+
+        <p>Kører filen app.js.</p>
+
+        <h3>Node REPL</h3>
+
+        <p>REPL står for Read, Evaluate, Print, Loop.</p>
+
+        <p>
+            Det er et miljø hvor vi kan skrive JavaScript
+            direkte i terminalen uden en fil.
+        </p>
+
+        <p>Start REPL:</p>
+
+        <pre><code>node</code></pre>
+
+        <p>Derefter:</p>
+
+        <pre><code>&gt; 2 + 2
+4</code></pre>
+
+        <p>Afslut:</p>
+
+        <pre><code>.exit</code></pre>
+    </section>
+
+    <section id="npm">
+        <h2>3.2 NPM</h2>
+
+        <h3>Hvad er NPM?</h3>
+
+        <p>
+            NPM (Node Package Manager) er en package manager til Node.js.
+            Den bruges til at installere og administrere packages
+            (biblioteker) som vi kan bruge i vores projekter,
+            så vi ikke behøver at skrive alting fra bunden.
+        </p>
+
+        <p>
+            Vi bruger npm fordi den allerede følger med Node.js
+            og er nem at bruge. Der findes andre package managers
+            der grundlæggende kan det samme.
+        </p>
+
+        <h3>Installation af Packages</h3>
+
+        <p>Vi kan bruge npm direkte i terminalen med npm install.</p>
+
+        <p>Fx Express:</p>
+
+        <pre><code>npm install express</code></pre>
+
+        <p>NPM tilføjer Express til dependencies i package.json.</p>
+
+        <h3>Dependencies og DevDependencies</h3>
+
+        <p>
+            <strong>Dependencies:</strong> Packages som vores applikation
+            har brug for når den kører. Fx Express.
+        </p>
+
+        <p>
+            <strong>DevDependencies:</strong> Packages som kun bruges
+            under development, fx Nodemon.
+        </p>
+
+        <pre><code>npm install express</code></pre>
+
+        <p>Installerer Express som en dependency.</p>
+
+        <pre><code>npm install --save-dev nodemon</code></pre>
+
+        <p>Installerer Nodemon som en devDependency.</p>
+
+        <h3>node_modules</h3>
+
+        <p>
+            node_modules er den mappe hvor NPM installerer
+            projektets packages og dependencies.
+        </p>
+
+        <p>
+            Når vi installerer Express bliver det fx lagt i node_modules.
+        </p>
+
+        <p>
+            <strong>RULE:</strong> Vi må ikke pushe node_modules til GitHub,
+            fordi mappen kan være meget stor og alligevel kan
+            genskabes med npm install.
+        </p>
+
+        <p>
+            Derfor tilføjer vi node_modules/ til vores .gitignore.
+        </p>
+    </section>
+
+    <section id="package-json">
+        <h2>3.3 package.json</h2>
+
+        <h3>Hvad er package.json?</h3>
+
+        <p>
+            package.json indeholder information om projektet.
+            Bruges fx til at holde styr på dependencies,
+            scripts og metadata.
+        </p>
+
+        <p>Eksempel:</p>
+
+        <pre><code>{
+  "name": "my-project",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}</code></pre>
+
+        <p><strong>name:</strong> Projektets navn.</p>
+        <p><strong>version:</strong> Projektets version.</p>
+        <p><strong>type:</strong> Bestemmer hvilket modulsystem projektet bruger. module betyder ES Modules.</p>
+        <p><strong>scripts:</strong> Kommandoer vi kan definere og køre i terminalen.</p>
+        <p><strong>dependencies:</strong> Packages vi bruger i projektet.</p>
+
+        <h3>npm init</h3>
+
+        <p>Opretter package.json i et nyt projekt.</p>
+
+        <pre><code>npm init</code></pre>
+
+        <p>Herefter kan man svare på spørgsmål vedrørende projektet.</p>
+
+        <h3>package-lock.json</h3>
+
+        <p>
+            package-lock.json bliver automatisk oprettet af NPM
+            og holder styr på de præcise versioner af projektets
+            installerede dependencies.
+        </p>
+
+        <p>
+            <strong>package.json:</strong> Dependencies og accepterede versioner.
+        </p>
+
+        <p>
+            <strong>package-lock.json:</strong> De konkrete versioner
+            så de kan være ens på tværs af computere.
+        </p>
+
+        <p>
+            <strong>RULE:</strong> Vi skal normalt pushe både
+            package.json og package-lock.json til GitHub,
+            men ikke node_modules.
+        </p>
+    </section>
+
+    <section id="npm-scripts">
+        <h2>3.4 NPM Scripts</h2>
+
+        <h3>Hvad er Scripts?</h3>
+
+        <p>
+            I package.json kan vi definere scripts.
+            Det er kommandoer som vi kan køre fra terminalen med NPM.
+        </p>
+
+        <p>
+            Det gør det nemmere at starte vores projekt
+            uden at skulle skrive hele kommandoen hver gang.
+        </p>
+
+        <p>Fx i package.json:</p>
+
+        <pre><code>{
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  }
+}</code></pre>
+
+        <h3>npm run</h3>
+
+        <p>Vi kan køre vores scripts fra terminalen.</p>
+
+        <pre><code>npm start</code></pre>
+
+        <p>
+            Kører vores start-script som starter app.js med Node.js.
+        </p>
+
+        <pre><code>npm run dev</code></pre>
+
+        <p>
+            Kører vores dev-script som starter app.js med Nodemon.
+        </p>
+
+        <p>
+            npm start er en genvej til npm run start.
+        </p>
+    </section>
+
+    <section id="nodemon">
+        <h2>3.5 Nodemon</h2>
+
+        <h3>Hvad er Nodemon?</h3>
+
+        <p>
+            Nodemon er et værktøj der automatisk genstarter
+            når vi ændrer og gemmer kode.
+        </p>
+
+        <p>
+            I stedet for at vi skal stoppe og køre serveren
+            igen når vi laver ændringer, gør Nodemon det for os.
+        </p>
+
+        <p>
+            <strong>Node:</strong> Kører vores JavaScript-kode.
+            Vi skal selv genstarte efter ændringer.
+        </p>
+
+        <p>
+            <strong>Nodemon:</strong> Genstarter automatisk
+            applikationen når filer ændres.
+        </p>
+
+        <p>
+            <strong>RULE:</strong> Nodemon bruges kun under
+            development og ikke i production.
+        </p>
+    </section>
+</main>

@@ -1,0 +1,162 @@
+
+<main class="documentation">
+    <h1>4. Modules</h1>
+
+    <nav class="chapter-intro" aria-label="Chapter contents">
+        <a href="#modules">Modules</a> |
+        <a href="#commonjs">CommonJS</a> |
+        <a href="#es-modules">ES Modules</a> |
+        <a href="#frontend-modules">Frontend Modules</a> |
+        <a href="#comparison">CommonJS vs. ES Modules</a>
+    </nav>
+
+    <section id="modules">
+        <h2>4.1 Modules</h2>
+
+        <h3>Hvad er et Module?</h3>
+
+        <p>
+            Et module er en JavaScript-fil der kan indeholde funktioner,
+            variabler og objekter som vi kan eksportere og bruge i andre filer.
+        </p>
+
+        <p>
+            Det gør det nemmere at opdele vores kode i flere filer
+            i stedet for at have alt i én stor fil.
+        </p>
+    </section>
+
+    <section id="commonjs">
+        <h2>4.2 CommonJS</h2>
+
+        <h3>require() og module.exports</h3>
+
+        <p>
+            CommonJS er et modulsystem i Node.js.
+            Vi bruger module.exports til at eksportere
+            og require() til at importere.
+        </p>
+
+        <p>
+            Herunder eksporterer vi fruits fra fruitsUtilCommonJS.js,
+            så vi kan importere det i app.js.
+        </p>
+
+        <h4>fruitsUtilCommonJS.js</h4>
+
+        <pre><code>const fruits = ["apple", "banana", "orange"];
+
+module.exports = fruits;</code></pre>
+
+        <h4>app.js</h4>
+
+        <pre><code>const fruits = require("./fruitsUtilCommonJS.js");
+
+console.log(fruits);</code></pre>
+    </section>
+
+    <section id="es-modules">
+        <h2>4.3 ES Modules</h2>
+
+        <h3>import og export</h3>
+
+        <p>
+            ES Modules er et modulsystem i JavaScript.
+            Vi bruger export til at eksportere fra en fil
+            og import til at importere i en anden fil.
+        </p>
+
+        <h4>fruitsUtilESModule.js</h4>
+
+        <pre><code>export const fruits = ["apple", "banana", "orange"];</code></pre>
+
+        <h4>app.js</h4>
+
+        <pre><code>import { fruits } from "./fruitsUtilESModule.js";
+
+console.log(fruits);</code></pre>
+
+        <p>
+            For at bruge ES Modules i vores Node.js-projekt
+            kan vi tilføje dette til package.json:
+        </p>
+
+        <pre><code>{
+    "type": "module"
+}</code></pre>
+    </section>
+
+    <section id="frontend-modules">
+        <h2>4.4 Modules i Frontend</h2>
+
+        <h3>type="module"</h3>
+
+        <p>
+            Vi kan også bruge ES Modules i browseren.
+        </p>
+
+        <p>
+            I HTML skal vi skrive type="module" på vores script:
+        </p>
+
+        <pre><code>&lt;script type="module" src="./app.js"&gt;&lt;/script&gt;</code></pre>
+
+        <p>
+            Så kan vi bruge import og export mellem
+            vores JavaScript-filer i frontend.
+        </p>
+    </section>
+
+    <section id="comparison">
+        <h2>4.5 CommonJS vs. ES Modules</h2>
+
+        <h3>CommonJS</h3>
+
+        <p><strong>require():</strong> Importerer et module.</p>
+        <p><strong>module.exports:</strong> Eksporterer fra et module.</p>
+        <p>Ældre modulsystem i Node.js.</p>
+        <p>Bruges stadig i mange Node.js-projekter.</p>
+
+        <h3>ES Modules</h3>
+
+        <p><strong>import:</strong> Importerer fra et module.</p>
+        <p><strong>export:</strong> Eksporterer fra et module.</p>
+        <p>Standardiseret JavaScript-modulsystem.</p>
+        <p>Kan bruges i både frontend og Node.js.</p>
+
+        <p>
+            Gør det muligt at genbruge samme syntax
+            i frontend og backend.
+        </p>
+
+        <h3>Sammenligning</h3>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Modulsystem</th>
+                    <th>Node.js</th>
+                    <th>Frontend</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>CommonJS</td>
+                    <td>require(), module.exports</td>
+                    <td>Ikke direkte understøttet i browseren</td>
+                </tr>
+                <tr>
+                    <td>ES Modules</td>
+                    <td>import, export</td>
+                    <td>import, export</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p>
+            Vi foretrækker ES Modules i nye projekter
+            fordi det er standardiseret og kan bruges
+            både i browseren og Node.js.
+        </p>
+    </section>
+</main>

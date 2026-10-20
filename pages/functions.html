@@ -1,0 +1,317 @@
+
+<main class="documentation">
+    <h1>2. Functions & Loop Methods</h1>
+
+    <nav class="chapter-intro" aria-label="Chapter contents">
+        <a href="#functions">Functions</a> |
+        <a href="#function-types">Function Types</a> |
+        <a href="#callbacks">Callbacks</a> |
+        <a href="#loop-methods">Loop Methods</a> |
+        <a href="#side-effects">Side Effects</a>
+    </nav>
+
+    <section id="functions">
+        <h2>2.1 Functions</h2>
+
+        <h3>Hvad er en funktion?</h3>
+
+        <p>
+            Funktioner er den grundlæggende byggesten i JavaScript.
+            En funktion indeholder kode der udfører en opgave eller udregning.
+            Kan tage imod input og returnere et output.
+        </p>
+
+        <pre><code>function addNumbers(a, b) {
+    return a + b;
+}
+
+console.log(addNumbers(5, 10)); // 15</code></pre>
+
+        <p>
+            Den består af function keyword, funktionens navn,
+            parametre i () og kode i {}.
+        </p>
+
+        <p>
+            a og b er parametre, 5 og 10 er arguments.
+            Return returnerer summen af a + b.
+        </p>
+
+        <h3>Parameters, Arguments og Return</h3>
+
+        <p><strong>Parametre:</strong> Variabler defineret i funktionens parentes. Modtager værdier.</p>
+        <p><strong>Arguments:</strong> De værdier vi sender med når vi kalder funktionen.</p>
+        <p><strong>Return:</strong> Den værdi som funktionen returnerer. Derefter stopper funktionen.</p>
+    </section>
+
+    <section id="function-types">
+        <h2>2.2 Function Types</h2>
+
+        <h3>Function Declaration</h3>
+
+        <p>
+            Når der deklareres med function keyword og et navn,
+            er det en function declaration.
+            Bliver hoisted, så den kan kaldes før den er deklareret.
+            Function addNumbers fra før er en function declaration.
+        </p>
+
+        <h3>Anonymous Function / Function Expression</h3>
+
+        <p>
+            En anonym funktion er en funktion uden navn.
+            Hvis funktionen tildeles en variabel kaldes den en function expression.
+        </p>
+
+        <pre><code>const addNumbers = function(a, b) {
+    return a + b;
+};
+
+console.log(addNumbers(5, 10)); // 15</code></pre>
+
+        <p>Funktionen gemmes i variablen addNumbers.</p>
+
+        <h3>Arrow Function</h3>
+
+        <p>Skriver =&gt; i stedet for function.</p>
+
+        <pre><code>const addNumbers = (a, b) =&gt; {
+    return a + b;
+};
+
+console.log(addNumbers(5, 10)); // 15</code></pre>
+
+        <p>Kan også skrives endnu kortere.</p>
+
+        <pre><code>const addNumbers = (a, b) =&gt; a + b;</code></pre>
+    </section>
+
+    <section id="callbacks">
+        <h2>2.3 Callbacks</h2>
+
+        <h3>Callback Functions</h3>
+
+        <p>
+            En funktion der sendes som argument til en anden funktion.
+            Den anden funktion kan kalde callback-funktionen
+            når der er behov for det.
+        </p>
+
+        <p>Callback-funktion:</p>
+
+        <pre><code>function genericActionPerformer(name, action) {
+    return action(name);
+}</code></pre>
+
+        <p>
+            Funktion der fungerer som action brugt i genericActionPerformer:
+        </p>
+
+        <pre><code>function playingGuitarAction(name) {
+    return `${name} likes to play guitar`;
+}</code></pre>
+
+        <p>
+            Her sendes playingGuitarAction som argument
+            til genericActionPerformer.
+        </p>
+
+        <pre><code>console.log(genericActionPerformer("Elias", playingGuitarAction));</code></pre>
+
+        <h3>Andre callbacks</h3>
+
+        <p>
+            Callback functions kan også bruges som
+            anonymous eller arrow functions.
+        </p>
+
+        <h3>Arrow function</h3>
+
+        <pre><code>const watchingMoviesAction = (name) =&gt; {
+    return `${name} likes to watch movies`;
+};
+
+console.log(genericActionPerformer("Magnus", watchingMoviesAction));</code></pre>
+
+        <h3>Anonymous function</h3>
+
+        <pre><code>console.log(genericActionPerformer("Magnus", function(name) {
+    return `${name} likes to watch movies`;
+}));</code></pre>
+
+        <h3>One-liner</h3>
+
+        <pre><code>console.log(genericActionPerformer("Jacob", (name) =&gt; `${name} likes sailing`));</code></pre>
+    </section>
+
+    <section id="loop-methods">
+        <h2>2.4 Loop Methods</h2>
+
+        <p>
+            Loop methods bruges til at arbejde med elementerne i et array.
+        </p>
+
+        <h3>forEach()</h3>
+
+        <p>
+            Bruges til at udføre noget for hvert element i et array.
+            Returnerer ikke et nyt array, men undefined.
+        </p>
+
+        <pre><code>const numbers = [1, 2, 3];
+
+numbers.forEach((number) =&gt; {
+    console.log(number);
+});
+
+// Printer 1, 2 og 3</code></pre>
+
+        <h3>map()</h3>
+
+        <p>
+            Kan bruges til at ændre elementerne i et array
+            og returnere et nyt array med resultaterne.
+            Returnerer en liste med samme størrelse 1:1.
+        </p>
+
+        <pre><code>const numbers = [1, 2, 3];
+
+const doubledNumbers = numbers.map((number) =&gt; {
+    return number * 2;
+});
+
+console.log(doubledNumbers); // [2, 4, 6]</code></pre>
+
+        <h3>filter()</h3>
+
+        <p>
+            Bruges til at filtrere elementer ud fra en betingelse.
+            Returnerer et nyt array med dem der opfylder betingelsen.
+        </p>
+
+        <pre><code>const numbers = [1, 2, 3, 4, 5];
+
+const filteredNumbers = numbers.filter((number) =&gt; {
+    return number &gt; 3;
+});
+
+console.log(filteredNumbers); // [4, 5]</code></pre>
+
+        <h3>find()</h3>
+
+        <p>
+            Finder det første element der opfylder en betingelse.
+            Returnerer undefined hvis det ikke findes.
+        </p>
+
+        <pre><code>const numbers = [1, 2, 3, 4, 5];
+
+const foundNumber = numbers.find((number) =&gt; number &gt; 3);
+
+console.log(foundNumber); // 4</code></pre>
+
+        <h3>findIndex()</h3>
+
+        <p>
+            Finder index for det første element der opfylder en betingelse.
+            Returnerer -1 hvis der ikke findes et match.
+        </p>
+
+        <pre><code>const numbers = [1, 2, 3, 4, 5];
+
+const index = numbers.findIndex((number) =&gt; number &gt; 3);
+
+console.log(index); // 3</code></pre>
+
+        <h3>reduce()</h3>
+
+        <p>
+            Bruges til at samle elementerne i et array
+            til et resultat, fx summen af alle tallene.
+        </p>
+
+        <pre><code>const numbers = [1, 2, 3, 4];
+
+const sum = numbers.reduce((accumulator, number) =&gt; {
+    return accumulator + number;
+}, 0);
+
+console.log(sum); // 10</code></pre>
+
+        <p>
+            Her er accumulator det samlede resultat indtil videre,
+            number er det aktuelle element og 0 er startværdien.
+        </p>
+
+        <h3>for Loops vs. Loop Methods</h3>
+
+        <p>
+            Vi foretrækker loop methods i stedet for traditionelle
+            for loops fordi de tydeligere viser hvad vi vil gøre
+            med vores data. Vi vil gerne arbejde med funktioner
+            og undgå side effects.
+        </p>
+
+        <p><strong>RULE 1:</strong> Brug altid loop methods i JavaScript.</p>
+        <p><strong>RULE 2:</strong> Brug ikke for loops medmindre du skal fingertælle.</p>
+        <p><strong>RULE 3:</strong> Brug .map() hvis du skal bruge et nyt array med resultaterne. Brug .forEach() hvis du bare skal udføre noget for hvert element.</p>
+    </section>
+
+    <section id="side-effects">
+        <h2>2.5 Side Effects</h2>
+
+        <h3>Hvad er Side Effects?</h3>
+
+        <p>
+            Side effects sker når en funktion påvirker noget uden for sig selv.
+            Fx hvis den ændrer på noget eksisterende i koden.
+            Vi vil helst undgå side effects når vi bruger loop methods.
+        </p>
+
+        <h3>Mutation af Objects og Arrays</h3>
+
+        <p>
+            Mutation betyder at vi ændrer på eksisterende data.
+            Fx hvis vi bruger .map() til at ændre et object direkte,
+            ændrer vi også det oprindelige object.
+        </p>
+
+        <pre><code>const countries = [
+    { name: "Denmark", gdp: 100 },
+    { name: "Lesotho", gdp: 50 }
+];
+
+const updatedCountries = countries.map((country) =&gt; {
+    if (country.name === "Lesotho") {
+        country.gdp += 500;
+    }
+    return country;
+});
+
+console.log(countries[1].gdp); // 550</code></pre>
+
+        <p>
+            Det oprindelige object blev ændret fordi country refererer
+            til det samme object som i countries.
+        </p>
+
+        <h3>Hvordan undgår vi Side Effects?</h3>
+
+        <p>
+            Vi bruger spread syntax (...) for at oprette et nyt object
+            i stedet for at ændre på det allerede eksisterende.
+        </p>
+
+        <pre><code>const updatedCountries = countries.map((country) =&gt; {
+    if (country.name === "Lesotho") {
+        return { ...country, gdp: country.gdp + 500 };
+    }
+    return country;
+});</code></pre>
+
+        <p>
+            <strong>RULE:</strong> Undgå at ændre på de oprindelige
+            objects når du bruger .map() til at ændre data.
+        </p>
+    </section>
+</main>

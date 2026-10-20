@@ -1,0 +1,285 @@
+
+<main class="documentation">
+    <h1>7. HTTP &amp; Communication</h1>
+
+    <nav class="chapter-intro" aria-label="Chapter contents">
+        <a href="#http">HTTP</a> |
+        <a href="#url-anatomy">URL Anatomy</a> |
+        <a href="#request-data">Request &amp; Response</a> |
+        <a href="#params">Params</a> |
+        <a href="#query">Query</a> |
+        <a href="#body">Body</a> |
+        <a href="#fetch">Fetch</a>
+    </nav>
+
+    <section id="http">
+        <h2>7.1 HTTP</h2>
+
+        <h3>Hvad er HTTP?</h3>
+
+        <p>
+            HTTP står for Hypertext Transfer Protocol.
+            Det er en protokol som client og server bruger
+            til at kommunikere med hinanden.
+        </p>
+
+        <h3>HTTP Request og Response</h3>
+
+        <p>
+            En HTTP request er en forespørgsel som clienten sender til serveren.
+            Serveren behandler requesten og sender en HTTP response tilbage.
+        </p>
+
+        <p>
+            <strong>Request:</strong> Indeholder bl.a. en HTTP method,
+            URL, headers og eventuelt en body.
+        </p>
+
+        <p>
+            <strong>Response:</strong> Indeholder en statuskode,
+            headers og eventuelt en body med data.
+        </p>
+
+        <p>
+            Fx hvis vi skriver http://localhost:8080/api/animals
+            i browseren, sender browseren en GET request til serveren.
+            Serveren kan derefter sende vores animals-array tilbage som JSON.
+        </p>
+    </section>
+
+    <section id="url-anatomy">
+        <h2>7.2 URL Anatomy</h2>
+
+        <h3>Opbygning af en URL</h3>
+
+        <p>
+            En URL (Uniform Resource Locator) er en resources adresse.
+            Den består af forskellige dele.
+        </p>
+
+        <pre><code>https://www.example.com:8080/animals/5?type=cat#details</code></pre>
+
+        <p><strong>Protocol:</strong> https:// - Bestemmer hvilken protokol der bruges.</p>
+        <p><strong>Subdomain:</strong> www - Et underdomæne.</p>
+        <p><strong>Domain:</strong> example.com - Domænenavnet.</p>
+        <p><strong>Port:</strong> 8080 - Den port serveren bruger.</p>
+        <p><strong>Path:</strong> /animals/5 - Stien til den resource vi vil tilgå.</p>
+        <p><strong>Query string:</strong> ?type=cat - Ekstra information sendt med URL'en.</p>
+        <p><strong>Fragment:</strong> #details - Henviser til en bestemt del af siden.</p>
+
+        <h3>Path og Query Parameters</h3>
+
+        <p>
+            <strong>Path parameter:</strong> En værdi som er en del
+            af URL'ens path. Bruges fx til at identificere
+            en bestemt resource.
+        </p>
+
+        <pre><code>/animals/5</code></pre>
+
+        <p>Her er 5 id'et på det animal vi vil hente.</p>
+
+        <pre><code>app.get("/beers/:beerType/:amount", (req, res) =&gt; {
+    console.log(req.params);
+    res.send({
+        data: `You ordered ${req.params.amount} of ${req.params.beerType}`
+    });
+});</code></pre>
+
+        <p>
+            <strong>Query parameter:</strong> Bruges til at sende
+            ekstra information i URL'en.
+        </p>
+
+        <pre><code>/animals?type=cat</code></pre>
+
+        <p>Her sender vi type=cat som en query parameter.</p>
+
+        <pre><code>app.get("/bars/forgottenItems", (req, res) =&gt; {
+    console.log(req.query);
+    res.send({ data: req.query });
+});</code></pre>
+
+        <p>Vi kan også have flere query parameters:</p>
+
+        <pre><code>/animals?type=cat&amp;age=3</code></pre>
+
+        <p>
+            ? starter query string, mens &amp; adskiller flere parameters.
+        </p>
+    </section>
+
+    <section id="request-data">
+        <h2>7.3 Request Data i Express</h2>
+
+        <h3 id="params">req.params</h3>
+
+        <p>Bruges til at hente værdier fra URL'ens path.</p>
+
+        <pre><code>app.get("/beers/:beerType/:amount", (req, res) =&gt; {
+    res.send({
+        data: `You ordered ${req.params.amount} of ${req.params.beerType}`
+    });
+});</code></pre>
+
+        <p>Hvis vi besøger:</p>
+
+        <pre><code>/beers/ipa/3</code></pre>
+
+        <p>
+            Så er req.params.beerType = "ipa"
+            og req.params.amount = "3".
+        </p>
+
+        <h3 id="query">req.query</h3>
+
+        <p>Bruges til at hente query parameters fra URL'en.</p>
+
+        <pre><code>app.get("/bars/forgottenItems", (req, res) =&gt; {
+    res.send({ data: req.query });
+});</code></pre>
+
+        <p>Fx:</p>
+
+        <pre><code>/bars/forgottenItems?item=phone&amp;color=black</code></pre>
+
+        <p>req.query indeholder værdierne item og color.</p>
+
+        <h3 id="body">req.body</h3>
+
+        <p>
+            Bruges til at hente data som clienten sender
+            i request body. Fx med POST.
+        </p>
+
+        <pre><code>app.use(express.json());
+
+app.post("/api/animals", (req, res) =&gt; {
+    const newAnimal = req.body;
+    res.send({ data: newAnimal });
+});</code></pre>
+
+        <p>
+            express.json() gør det muligt at læse JSON
+            fra request body gennem req.body. Det er middleware.
+        </p>
+    </section>
+
+    <section id="fetch">
+        <h2>7.4 Fetch</h2>
+
+        <h3>Hvad er Fetch?</h3>
+
+        <p>
+            Fetch bruges til at sende HTTP requests og hente data
+            fra en server eller et API.
+        </p>
+
+        <p>
+            Fetch er asynchronous, hvilket betyder at vi ikke
+            får et resultat med det samme. Den returnerer et Promise.
+        </p>
+
+        <h3>GET Request med Fetch</h3>
+
+        <p>GET henter data.</p>
+
+        <pre><code>fetch("/api/animals")
+    .then((response) =&gt; response.json())
+    .then((result) =&gt; {
+        console.log(result);
+    });</code></pre>
+
+        <p>
+            <strong>.then():</strong> Håndterer resultatet
+            når det er færdigt.
+        </p>
+
+        <p>
+            <strong>response.json():</strong> Læser JSON fra responsen
+            og laver det om til JavaScript-data.
+        </p>
+
+        <h3>POST Request med Fetch</h3>
+
+        <p>POST sender data til serveren. Fx for at oprette et dyr.</p>
+
+        <pre><code>fetch("/api/animals", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+        name: "Cat"
+    })
+});</code></pre>
+
+        <p>
+            <strong>method:</strong> Bestemmer at vi bruger POST.
+        </p>
+
+        <p>
+            <strong>headers:</strong> Fortæller serveren at det er JSON.
+        </p>
+
+        <p>
+            <strong>body:</strong> Indeholder data.
+        </p>
+
+        <p>
+            <strong>JSON.stringify():</strong> Konverterer et
+            JavaScript-object til en JSON-string.
+        </p>
+
+        <h3>Fetch i Node.js</h3>
+
+        <p>
+            Vi kan også bruge fetch direkte i Node.js på serversiden.
+            Det har vi fx gjort i vores Planter-projekt (util/fetchPlants.js):
+        </p>
+
+        <pre><code>let plants;
+
+async function fetchPlants() {
+    if (!plants) {
+        const response = await fetch("https://www.plantsolve.com/api/v1/plants/index.json");
+        plants = await response.json();
+    }
+
+    return plants;
+}</code></pre>
+
+        <p>
+            Vi henter plantedata fra et eksternt API.
+            Vi gemmer resultatet i plants, så vi ikke behøver
+            hente data igen hver gang funktionen kaldes.
+        </p>
+
+        <h3>async/await</h3>
+
+        <p>
+            <strong>Async:</strong> Bruges til at lave en
+            asynchronous funktion som returnerer et Promise.
+        </p>
+
+        <p>
+            <strong>Await:</strong> Venter på at et Promise
+            bliver afgjort før funktionen fortsætter.
+            Stopper ikke hele programmet.
+        </p>
+
+        <pre><code>async function getAnimals() {
+    const response = await fetch("/api/animals");
+    const result = await response.json();
+
+    console.log(result);
+}
+
+getAnimals();</code></pre>
+
+        <p>
+            Her venter vi først på responsen fra serveren
+            og derefter på at JSON-data bliver læst.
+        </p>
+    </section>
+</main>

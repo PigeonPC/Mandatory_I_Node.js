@@ -1,0 +1,427 @@
+<main class="documentation">
+    <h1>1. JavaScript Fundamentals</h1>
+
+    <nav class="chapter-intro" aria-label="Chapter contents">
+        <a href="#variables">Variabler og datatyper</a> |
+        <a href="#objects-arrays">Objects og Arrays</a> |
+        <a href="#strings">Strings og Template Literals</a> |
+        <a href="#scope">Scope</a> |
+        <a href="#strict-mode">Strict Mode</a> |
+        <a href="#type-coercion">Type Coercion</a> |
+        <a href="#hoisting">Hoisting</a> |
+        <a href="#truthy-falsy">Truthy og Falsy</a> |
+        <a href="#logical-operators">Logical Operators</a> |
+        <a href="#increment-decrement">Increment og Decrement</a>
+    </nav>
+
+    <section id="variables">
+        <h2>1.1 Variabler og Datatyper</h2>
+
+        <h3>Variabler</h3>
+
+        <p>
+            Vi bruger tre måder at deklarere værdier i JavaScript:
+            const, let og var.
+        </p>
+
+        <p><strong>const:</strong> Kan ikke tildeles en ny værdi efter deklarationen.</p>
+        <p><strong>let:</strong> Kan ændres og tildeles en ny værdi.</p>
+        <p><strong>var:</strong> Brug ikke! Gammel. Er ikke block-scoped.</p>
+
+        <p><strong>RULE:</strong> Brug altid const. Ellers brug let. Aldrig var.</p>
+
+        <pre><code>const myFavoriteNumber = 7;
+
+let age = 25;
+age = 26;</code></pre>
+
+        <h3>Datatypes</h3>
+
+        <p><strong>String:</strong> Tekst. Skrives i citationstegn. Primitiv.</p>
+        <p><strong>Boolean:</strong> Kan have værdien true eller false. Primitiv.</p>
+        <p><strong>Number:</strong> Tal. Både hele og decimaltal. Primitiv.</p>
+        <p><strong>BigInt:</strong> Bruges til meget store tal som Number ikke kan vise præcist. Primitiv.</p>
+        <p><strong>null:</strong> Betyder at en værdi bevidst er sat som ingenting. Primitiv.</p>
+        <p><strong>undefined:</strong> En variabel der ikke har fået tildelt en værdi. Primitiv.</p>
+        <p><strong>Object:</strong> Kan samle flere værdier i ét objekt. Indeholder typisk key-value pairs.</p>
+
+        <pre><code>({ name: "Olga", age: 27 })</code></pre>
+
+        <p><strong>Symbol:</strong> Kan lave unikke værdier. Primitiv.</p>
+    </section>
+
+    <section id="objects-arrays">
+        <h2>1.2 Objects og Arrays</h2>
+
+        <h3>Objects</h3>
+
+        <p>Objekter består af key-value pairs.</p>
+
+        <pre><code>const person = {
+    // key-value pair
+    name: "Adam"
+};
+
+// Tilføjer en ny key-value pair til objektet
+person.age = 30;
+
+// Slet navnet under objektet person
+delete person.name;</code></pre>
+
+        <p>
+            Selvom person er deklareret med const, kan vi stadig godt
+            ændre i indholdet.
+        </p>
+
+        <pre><code>console.log(person); // { age: 30 }</code></pre>
+
+        <h3>Arrays</h3>
+
+        <p>
+            Et array er også en type af objekt der kan gemme værdier
+            i en liste. Arrays starter ved index 0.
+        </p>
+
+        <pre><code>const things = ["mouse", "car", "cat"];
+
+console.log(things[0]); // "mouse"
+console.log(things[1]); // "car"</code></pre>
+
+        <h3>Array methods</h3>
+
+        <p><strong>push():</strong> Tilføjer et eller flere elementer til slutningen af et array.</p>
+        <p><strong>pop():</strong> Fjerner det sidste element i et array.</p>
+        <p><strong>length:</strong> Viser antallet af elementer i et array.</p>
+        <p><strong>indexOf():</strong> Finder index for en bestemt værdi. Returnerer -1 hvis værdien ikke findes.</p>
+        <p><strong>splice():</strong> Kan tilføje, fjerne eller erstatte elementer i et array.</p>
+        <p><strong>Spread syntax (...):</strong> Kan bruges til at kopiere elementer fra et array til et nyt array.</p>
+
+        <h3>push(), pop() og length</h3>
+
+        <pre><code>const things = ["mouse"];
+
+things.push("car"); // Tilføjer "car"
+things.pop();       // Fjerner "car"
+
+console.log(things);        // ["mouse"]
+console.log(things.length); // 1</code></pre>
+
+        <h3>indexOf()</h3>
+
+        <pre><code>const numbers = [10, 20, 30];
+
+console.log(numbers.indexOf(20)); // 1
+console.log(numbers.indexOf(50)); // -1</code></pre>
+
+        <h3>splice()</h3>
+
+        <pre><code>const diet = ["tomato", "cucumber", "rocket"];
+
+diet.splice(2, 0, "hamburger", "pizza");
+
+console.log(diet);
+// ["tomato", "cucumber", "hamburger", "pizza", "rocket"]</code></pre>
+
+        <p>
+            splice(startIndex, deleteCount, items) bestemmer hvor vi starter,
+            hvor mange elementer der skal fjernes og hvad der eventuelt skal indsættes.
+        </p>
+
+        <h3>Spread syntax (...)</h3>
+
+        <pre><code>const diet = ["tomato", "cucumber", "rocket"];
+const dinnerTray = [...diet];</code></pre>
+
+        <p>Opretter et kopieret array med samme elementer.</p>
+
+        <h3>Reference Types</h3>
+
+        <p>
+            Objects og arrays er ikke primitive typer, men reference types.
+            Dvs. at hvis vi tildeler et objekt til en anden variabel, vil de
+            begge referere til det samme objekt. Så hvis man ændrer i den ene,
+            vil det også kunne ses gennem den anden.
+        </p>
+
+        <pre><code>const fruits = ["apple", "banana"];
+const otherFruits = fruits;
+
+otherFruits.push("orange");
+
+console.log(fruits);
+// ["apple", "banana", "orange"]</code></pre>
+
+        <p>Ændringer i otherFruits påvirker derfor også fruits.</p>
+    </section>
+
+    <section id="strings">
+        <h2>1.3 Strings og Template Literals</h2>
+
+        <p>
+            Strings kan skrives på flere måder, fx med dobbelte eller
+            enkelte citationstegn.
+        </p>
+
+        <pre><code>const greetingOne = "Hej, godt at se dig igen";</code></pre>
+
+        <p>
+            Man kan godt have dobbelte citationstegn i en string
+            hvis man har brugt enkelte yderst.
+        </p>
+
+        <pre><code>const greetingTwo = 'Hej, godt at se dig "ven"';</code></pre>
+
+        <p>
+            Man kan også bruge backticks (`), som kaldes template literals.
+            Med backticks kan man både bruge dobbelte og enkelte citationstegn.
+            De kan også bruges til multiline strings og til at indsætte
+            JavaScript-variabler med ${}.
+        </p>
+
+        <pre><code>const greetingThree = `Hej med 'dig', "${person.name}"`;</code></pre>
+
+        <h3>String methods</h3>
+
+        <p>Vi kan bruge forskellige metoder til at arbejde med tekst.</p>
+        <p>replace() kan erstatte dele af en string.</p>
+
+        <pre><code>const fact = "You are learning javascript!";
+
+const result = fact.replace("javascript", "Javascript");
+
+console.log(result); // You are learning Javascript!</code></pre>
+
+        <p>
+            Vi kan også tage fat i et specifikt tegn i en string
+            ved at bruge index. Starter ved 0 ligesom arrays.
+        </p>
+
+        <pre><code>const letters = "abc";
+
+console.log(letters[2]); // c</code></pre>
+    </section>
+
+    <section id="scope">
+        <h2>1.4 Scope</h2>
+
+        <p>
+            Scope bestemmer hvor en variabel kan tilgås fra.
+            Altså hvor langt dens reach er i koden.
+        </p>
+
+        <p><strong>Global scope:</strong> En variabel der er deklareret uden for funktioner og blokke.</p>
+        <p><strong>Function scope:</strong> Variablen kan tilgås i den funktion den er deklareret i.</p>
+        <p><strong>Block scope:</strong> Variablen kan tilgås inde i den blok {} den er deklareret i.</p>
+
+        <p>var er ikke block-scoped, men let og const er det!</p>
+
+        <pre><code>{
+    var someValue = 123;
+
+    {
+        var someValue = 456;
+    }
+
+    console.log(someValue); // 456
+}</code></pre>
+
+        <p>
+            Her er someValue 456. Det er fordi var ikke er block-scoped
+            og derfor kan ændres uden for den blok den er deklareret i.
+        </p>
+
+        <p>let er anderledes.</p>
+
+        <pre><code>{
+    let someOtherValue = true;
+
+    {
+        let someOtherValue = false;
+    }
+
+    console.log(someOtherValue); // true
+}</code></pre>
+
+        <p>
+            <strong>RULE:</strong> Brug let frem for var!
+            Vi vil gerne undgå at variabler kan påvirke hinanden ved en fejl.
+        </p>
+    </section>
+
+    <section id="strict-mode">
+        <h2>1.5 Strict Mode</h2>
+
+        <p>
+            Strict mode gør at JavaScript fanger visse fejl,
+            som når man prøver at bruge en udeklareret variabel.
+        </p>
+
+        <pre><code>"use strict";
+
+totalGlobalVariable = "Never EVER do this";</code></pre>
+
+        <p>
+            Det her vil give en fejl fordi variablen ikke er deklareret.
+            Dvs. man skal tilføje const eller let.
+        </p>
+    </section>
+
+    <section id="type-coercion">
+        <h2>1.6 Type Coercion</h2>
+
+        <p>
+            Type coercion betyder at JavaScript konverterer
+            en datatype til en anden.
+        </p>
+
+        <pre><code>console.log("5" + 2); // "52", string
+console.log("5" - 2); // 3, Number</code></pre>
+
+        <p>
+            Ved + bliver tallet lavet til en string, mens -
+            får det til at blive et tal. Det er ikke så fedt.
+        </p>
+
+        <p>For at undgå problemer kan det fx skrives sådan:</p>
+
+        <pre><code>const number = Number("5");
+
+console.log(number + 2); // 7</code></pre>
+
+        <p>
+            <strong>RULE:</strong> Brug komma i console.log() frem for +
+            når vi vil printe flere værdier. + kan nemlig medføre type coercion.
+        </p>
+
+        <h3>Konvertering af datatyper</h3>
+
+        <p>Vi kan konvertere strings til numbers med flere metoder:</p>
+
+        <p><strong>Number():</strong> Konverterer en string til et tal. Returnerer NaN hvis den ikke kan konverteres.
+        </p>
+        <p><strong>parseInt():</strong> Konverterer starten af en string til et tal.</p>
+        <p><strong>parseFloat():</strong> Konverterer starten af en string til et decimaltal.</p>
+        <p><strong>toFixed():</strong> Kan formatere et tal med et specifikt antal decimaler. Returnerer en string.</p>
+
+        <pre><code>console.log(Number("2025"));      // 2025
+console.log(parseInt("1234abc")); // 1234
+console.log(parseFloat("1.10"));  // 1.1
+
+const number = 3.4;
+console.log(number.toFixed(2));   // "3.40"</code></pre>
+
+        <h3>=== vs ==</h3>
+
+        <p>
+            Vi vil helst bruge === til sammenligning da den sammenligner
+            uden type coercion, som == gør.
+        </p>
+
+        <pre><code>5 == "5";  // true
+5 === "5"; // false</code></pre>
+
+        <p>
+            Her bliver == true fordi den konverterer værdierne
+            til samme datatype.
+        </p>
+    </section>
+
+    <section id="hoisting">
+        <h2>1.7 Hoisting</h2>
+
+        <p>
+            Hoisting betyder at man i JavaScript kan kalde en function
+            declaration før den står i koden, fordi JavaScript
+            håndterer deklarationer før koden køres.
+        </p>
+
+        <pre><code>getRandomInt(5, 10);
+
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1) + min);
+}</code></pre>
+
+        <p>
+            Her kaldes funktionen før den er deklareret.
+            let og const kan ikke bruges før deres deklaration.
+        </p>
+    </section>
+
+    <section id="truthy-falsy">
+        <h2>1.8 Truthy og Falsy</h2>
+
+        <p>
+            I JavaScript kan værdier fortolkes som true eller false
+            selv hvis de ikke er booleans.
+        </p>
+
+        <p><strong>Falsy:</strong> false, 0, "", null, undefined, NaN, 0n.</p>
+        <p><strong>Truthy:</strong> De fleste andre værdier, fx "hello", 42, [] og {}.</p>
+
+        <p>
+            Fx bliver else kørt her fordi en tom string gælder som falsy.
+        </p>
+
+        <pre><code>const name = "";
+
+if (name) {
+    console.log("Has a name");
+} else {
+    console.log("No name");
+}</code></pre>
+    </section>
+
+    <section id="logical-operators">
+        <h2>1.9 Logical Operators (||, ??, &amp;&amp;)</h2>
+
+        <p><strong>|| (OR):</strong> Returnerer den første truthy værdi, ellers den sidste værdi.</p>
+        <p><strong>?? (Nullish Coalescing):</strong> Returnerer værdien til højre hvis værdien til venstre er null eller
+            undefined.</p>
+        <p><strong>&amp;&amp; (AND):</strong> Returnerer den første falsy værdi, ellers den sidste værdi.</p>
+
+        <pre><code>const count = 0;
+
+console.log(count || 10); // 10
+console.log(count ?? 10); // 0</code></pre>
+
+        <p>
+            <strong>VIGTIGT:</strong> || reagerer også på fx 0 og "",
+            men ?? reagerer kun på null og undefined.
+        </p>
+    </section>
+
+    <section id="increment-decrement">
+        <h2>1.10 Increment og Decrement (++, --)</h2>
+
+        <p>
+            Man bruger ++ eller -- til at tilføje eller fjerne 1
+            fra en variabel.
+        </p>
+
+        <pre><code>let counter = 0;
+
+counter++; // counter = 1
+counter--; // counter = 0</code></pre>
+
+        <p>
+            Der er forskel på om operatoren står før eller efter variablen.
+        </p>
+
+        <pre><code>let number = 5;
+
+console.log(number++); // 5
+console.log(number);   // 6
+
+console.log(++number); // 7</code></pre>
+
+        <p>
+            <strong>number++</strong> returnerer den gamle værdi
+            og øger variablen bagefter.
+        </p>
+
+        <p>
+            <strong>++number</strong> øger først variablen
+            og returnerer den nye værdi.
+        </p>
+    </section>
+</main>

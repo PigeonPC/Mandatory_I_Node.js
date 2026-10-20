@@ -1,0 +1,214 @@
+<main class="documentation">
+    <h1>5. Express &amp; Servers</h1>
+
+    <nav class="chapter-intro" aria-label="Chapter contents">
+        <a href="#client-server">Client-server</a> |
+        <a href="#express">Express</a> |
+        <a href="#routes">Routes</a> |
+        <a href="#middleware">Middleware</a>
+    </nav>
+
+    <section id="client-server">
+        <h2>5.1 Client-Server Model</h2>
+
+        <h3>Hvad er Client-Server?</h3>
+
+        <p>
+            Client-server modellen beskriver hvordan en client og server
+            kommunikerer med hinanden.
+        </p>
+
+        <p>
+            <strong>Client:</strong> Den der sender en request til serveren.
+            Fx en browser.
+        </p>
+
+        <p>
+            <strong>Server:</strong> Modtager en request fra clienten,
+            behandler den og sender en HTTP response tilbage.
+        </p>
+
+        <p>
+            Fx når vi åbner en hjemmeside i browseren, sender browseren
+            en GET request til serveren for at hente indholdet.
+        </p>
+    </section>
+
+    <section id="express">
+        <h2>5.2 Express</h2>
+
+        <h3>Hvad er Express?</h3>
+
+        <p>
+            Express er et framework til Node.js som vi bruger
+            til at lave servere og API'er.
+        </p>
+
+        <p>
+            Det gør det nemmere at arbejde med HTTP requests og
+            responses og oprette routes til vores endpoints.
+        </p>
+
+        <p>Vi installerer Express med NPM:</p>
+
+        <pre><code>npm install express</code></pre>
+
+        <h3>Opsætning af en Express-server</h3>
+
+        <p>
+            Eksempel med CommonJS og error handling i app.listen():
+        </p>
+
+        <pre><code>const express = require("express");
+const app = express();
+
+app.get("/", (req, res) =&gt; {
+    res.send("Hello World!");
+});
+
+const PORT = 8080;
+
+app.listen(PORT, (error) =&gt; {
+    if (error) {
+        console.log(error);
+        return;
+    }
+
+    console.log("Server is running on port", PORT);
+});</code></pre>
+
+        <p>
+            <strong>require("express"):</strong> Importerer Express.
+        </p>
+
+        <p>
+            <strong>express():</strong> Opretter en Express-app.
+        </p>
+
+        <p>
+            <strong>app.get():</strong> Definerer en route til GET requests.
+        </p>
+
+        <p>
+            <strong>res.send():</strong> Sender en response tilbage til clienten.
+        </p>
+
+        <p>
+            <strong>app.listen():</strong> Starter serveren på en bestemt port.
+        </p>
+
+        <p>Vi kan også starte serveren sådan her:</p>
+
+        <pre><code>app.listen(8080, () =&gt; {
+    console.log("Server is running on port 8080");
+});</code></pre>
+
+        <p>
+            Starter serveren på port 8080.
+            Vi kan se den på:
+            <a href="http://localhost:8080">http://localhost:8080</a>
+        </p>
+    </section>
+
+    <section id="routes">
+        <h2>5.3 Routes</h2>
+
+        <h3>Hvad er en Route?</h3>
+
+        <p>
+            En route bestemmer hvordan serveren reagerer på en HTTP request.
+            Vi opretter routes med fx app.get() og app.post().
+        </p>
+
+        <p>
+            En route består af en HTTP method, en URL path
+            og en callback function der håndterer requesten.
+        </p>
+
+        <h3>app.get()</h3>
+
+        <p>
+            Håndterer GET requests når en client vil hente data fra serveren.
+        </p>
+
+        <pre><code>app.get("/api/animals", (req, res) =&gt; {
+    res.send({ data: animals });
+});</code></pre>
+
+        <p>
+            Serveren sender animals-arrayet tilbage til clienten
+            når clienten laver en GET request på /api/animals.
+        </p>
+
+        <h3>res.send() og res.sendFile()</h3>
+
+        <p>
+            <strong>res.send():</strong> Bruges til at sende data tilbage
+            til clienten. res = response. Sender fx tekst, HTML eller et JavaScript-object.
+        </p>
+
+        <pre><code>app.get("/", (req, res) =&gt; {
+    res.send("Hello World!");
+});</code></pre>
+
+        <p>
+            <strong>res.sendFile():</strong> Sender en fil tilbage
+            til clienten. Fx en HTML-fil.
+        </p>
+
+        <pre><code>app.get("/", (req, res) =&gt; {
+    res.sendFile(__dirname + "/index.html");
+});</code></pre>
+
+        <p>
+            index.html bliver sendt når clienten besøger /.
+        </p>
+
+        <p>
+            <strong>__dirname:</strong> Indeholder stien til mappen
+            hvor den aktuelle JavaScript-fil ligger. Det er smart når
+            flere arbejder på projektet og har forskellige stier
+            på deres computere.
+        </p>
+    </section>
+
+    <section id="middleware">
+        <h2>5.4 Middleware</h2>
+
+        <h3>Hvad er Middleware?</h3>
+
+        <p>
+            Middleware er funktioner som Express bruger til at behandle
+            requests. De har adgang til req og res og kan fx læse
+            JSON-data fra en request.
+        </p>
+
+        <h3>app.use()</h3>
+
+        <p>Tilføjer middleware i Express:</p>
+
+        <pre><code>app.use(express.json());</code></pre>
+
+        <h3>express.json()</h3>
+
+        <p>
+            Bruges til at læse JSON fra en HTTP request body
+            så data bliver tilgængelige gennem req.body.
+        </p>
+
+        <pre><code>const express = require("express");
+const app = express();
+
+app.use(express.json());
+
+app.post("/api/animals", (req, res) =&gt; {
+    console.log(req.body);
+    res.send({ data: req.body });
+});</code></pre>
+
+        <p>
+            Clienten kan sende JSON-data med POST.
+            Express kan læse dataene og bruge dem gennem req.body.
+        </p>
+    </section>
+</main>
