@@ -5,7 +5,7 @@
 
 :root {
     --header-bg: #F5A5C3;
-    --sidebar-bg: #C7F2DA;
+    --sidebar-bg: #f2c7c7;
     --page-bg: #FFFAFC;
     --heading-2: #C12668;
     --heading-3: #176B91;
@@ -99,7 +99,7 @@ main {
 }
 
 .sidebar a:hover {
-    background-color: #A2E7C8;
+    background-color: #f0acac;
     color: var(--accent-blue);
     text-decoration: none;
 }
