@@ -213,3 +213,18 @@ pre code {
         width: auto;
     }
 }
+
+
+/* =========================================
+   HOME MESSAGE
+   ========================================= */
+
+.message {
+    margin-top: 60px;
+    padding-top: 20px;
+    border-top: 2px solid var(--heading-3);
+}
+
+.message p {
+    line-height: 1.7;
+}
